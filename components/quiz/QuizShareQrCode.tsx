@@ -9,8 +9,9 @@ export function QuizShareQrCode() {
 
   useEffect(() => {
     let cancelled = false;
+    const url = getQuizShareUrl();
 
-    QRCode.toDataURL(getQuizShareUrl(), {
+    QRCode.toDataURL(url, {
       width: 128,
       margin: 1,
       color: {
