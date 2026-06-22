@@ -1,0 +1,48 @@
+{
+  "name": "maplestory-reborn-tools",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && prisma generate --schema crawler/prisma/schema.prisma && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "crawl": "node crawler/src/index.js",
+    "crawler:studio": "npm --prefix crawler run studio",
+    "crawler:publish": "npm --prefix crawler run publish",
+    "crawler:cleanup": "npm --prefix crawler run cleanup:duplicates"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "axios": "^1.18.0",
+    "cheerio": "^1.2.0",
+    "html2canvas": "^1.4.1",
+    "next": "^14.2.23",
+    "prisma": "^5.22.0",
+    "qrcode": "^1.5.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsx": "^4.19.2",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.23",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
+}

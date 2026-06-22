@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ItemType {
+  EQUIPMENT
+  USE
+  ETC
+  MATERIAL
+  QUEST
+}
+
+enum MonsterElement {
+  NEUTRAL
+  FIRE
+  ICE
+  LIGHTNING
+  POISON
+  HOLY
+  DARK
+}
+
+model Monster {
+  id          String         @id @default(cuid())
+  slug        String         @unique
+  name        String
+  region      String
+  level       Int
+  hp          Int
+  exp         Int
+  element     MonsterElement @default(NEUTRAL)
+  weakness    MonsterElement?
+  description String
+  mapName     String
+  spawnRate   String
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  drops       Drop[]
+
+  @@index([level])
+  @@index([region])
+  @@index([name])
+}
+
+model Item {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  type        ItemType
+  requiredLevel Int?
+  vendorValue Int      @default(0)
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  drops       Drop[]
+
+  @@index([type])
+  @@index([name])
+}
+
+model Drop {
+  id        String   @id @default(cuid())
+  monsterId String
+  itemId    String
+  chance    Decimal  @db.Decimal(6, 4)
+  quantityMin Int    @default(1)
+  quantityMax Int    @default(1)
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  monster   Monster  @relation(fields: [monsterId], references: [id], onDelete: Cascade)
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@unique([monsterId, itemId])
+  @@index([chance])
+}
+
+model LevelBracket {
+  id          String   @id @default(cuid())
+  minLevel    Int
+  maxLevel    Int
+  title       String
+  summary     String
+  recommendedMaps String[]
+  monsterSlugs String[]
+  tips        String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([minLevel, maxLevel])
+}

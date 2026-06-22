@@ -1,0 +1,21 @@
+{
+  "name": "maple-crawler",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node start.js",
+    "studio": "prisma studio --schema prisma/schema.prisma",
+    "publish": "node publish.js",
+    "cleanup:duplicates": "node cleanupDuplicates.js",
+    "prisma:generate": "prisma generate --schema prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema prisma/schema.prisma"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "axios": "^1.18.0",
+    "cheerio": "^1.2.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0"
+  }
+}

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 120" fill="none" role="img" aria-label="??????">
+  <rect width="640" height="120" fill="#18181b"/>
+  <rect x="0.5" y="0.5" width="639" height="119" stroke="#3f3f46"/>
+  <rect x="24" y="24" width="592" height="72" rx="6" fill="url(#banner-bg)"/>
+  <circle cx="120" cy="60" r="28" fill="url(#banner-glow)"/>
+  <path d="M120 38c-3 4.5-7.5 6-10.5 10.5-3 4.5-3 9-1.5 13.5 1.2 2.4 3 4.5 5.25 6.75-1.8-.15-3.6-.6-5.25-1.35-3 2.25-4.8 5.85-4.2 9.6.45 2.7 2.25 4.95 4.8 6.15 2.25-1.2 4.5-3 6-5.25 1.5 2.25 3.75 4.05 6 5.25 2.55-1.2 4.35-3.45 4.8-6.15.6-3.75-1.2-7.35-4.2-9.6-1.65.75-3.45 1.2-5.25 1.35 2.25-2.25 4.05-4.35 5.25-6.75 1.5-2.25 1.2-6.75-1.5-10.5-3-4.5-7.5-6-10.5-9z" fill="#fbbf24"/>
+  <rect x="200" y="44" width="360" height="10" rx="5" fill="#27272a"/>
+  <rect x="200" y="66" width="280" height="10" rx="5" fill="#27272a"/>
+  <defs>
+    <linearGradient id="banner-bg" x1="24" y1="24" x2="616" y2="96" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1c1917"/>
+      <stop offset="0.5" stop-color="#292524"/>
+      <stop offset="1" stop-color="#1c1917"/>
+    </linearGradient>
+    <radialGradient id="banner-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(120 60) scale(28)">
+      <stop stop-color="#fbbf24" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

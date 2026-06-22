@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./monsters.db"
+}
+
+model Monster {
+  id    Int     @id
+  name  String?
+  level Int?
+  hp    Int?
+  exp   Int?
+  image String?
+  map   String?
+}

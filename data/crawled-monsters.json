@@ -1,0 +1,740 @@
+[
+  {
+    "id": 100100,
+    "name": "蜗牛",
+    "level": 1,
+    "hp": 8,
+    "exp": 3,
+    "image": "/images/monsters/100100.png",
+    "map": "大蘑菇"
+  },
+  {
+    "id": 100101,
+    "name": "蓝蜗牛",
+    "level": 2,
+    "hp": 15,
+    "exp": 4,
+    "image": "/images/monsters/100101.png",
+    "map": "冒险家修炼场入口"
+  },
+  {
+    "id": 120100,
+    "name": "蘑菇仔",
+    "level": 2,
+    "hp": 20,
+    "exp": 5,
+    "image": "/images/monsters/120100.png",
+    "map": "冒险家修炼场入口"
+  },
+  {
+    "id": 130100,
+    "name": "木妖",
+    "level": 4,
+    "hp": 40,
+    "exp": 8,
+    "image": "/images/monsters/130100.png",
+    "map": "冒险家修炼场1"
+  },
+  {
+    "id": 130101,
+    "name": "红蜗牛",
+    "level": 4,
+    "hp": 40,
+    "exp": 8,
+    "image": "/images/monsters/130101.png",
+    "map": "冒险家修炼场2"
+  },
+  {
+    "id": 210100,
+    "name": "绿水灵",
+    "level": 6,
+    "hp": 50,
+    "exp": 10,
+    "image": "/images/monsters/210100.png",
+    "map": "冒险家修炼场3"
+  },
+  {
+    "id": 1110100,
+    "name": "绿蘑菇",
+    "level": 15,
+    "hp": 250,
+    "exp": 26,
+    "image": "/images/monsters/1110100.png",
+    "map": "花蘑菇"
+  },
+  {
+    "id": 1110101,
+    "name": "黑木妖",
+    "level": 10,
+    "hp": 250,
+    "exp": 18,
+    "image": "/images/monsters/1110101.png",
+    "map": "大木林Ⅲ"
+  },
+  {
+    "id": 1120100,
+    "name": "三眼章鱼",
+    "level": 12,
+    "hp": 200,
+    "exp": 24,
+    "image": "/images/monsters/1120100.png",
+    "map": "废都北方工地"
+  },
+  {
+    "id": 1130100,
+    "name": "斧木妖",
+    "level": 17,
+    "hp": 300,
+    "exp": 30,
+    "image": "/images/monsters/1130100.png",
+    "map": "魔法森林南部"
+  },
+  {
+    "id": 1140100,
+    "name": "古木妖",
+    "level": 19,
+    "hp": 330,
+    "exp": 33,
+    "image": "/images/monsters/1140100.png",
+    "map": "遗迹发掘地Ⅰ"
+  },
+  {
+    "id": 1210101,
+    "name": "漂漂猪",
+    "level": 10,
+    "hp": 120,
+    "exp": 20,
+    "image": "/images/monsters/1210101.png",
+    "map": "射手村东部树林"
+  },
+  {
+    "id": 1210102,
+    "name": "花蘑菇",
+    "level": 8,
+    "hp": 80,
+    "exp": 15,
+    "image": "/images/monsters/1210102.png",
+    "map": "冒险家修炼场入口"
+  },
+  {
+    "id": 1210103,
+    "name": "蓝水灵",
+    "level": 15,
+    "hp": 240,
+    "exp": 26,
+    "image": "/images/monsters/1210103.png",
+    "map": "地铁一号线<第1地区>"
+  },
+  {
+    "id": 2110200,
+    "name": "刺蘑菇",
+    "level": 22,
+    "hp": 300,
+    "exp": 35,
+    "image": "/images/monsters/2110200.png",
+    "map": "南部森林训练场Ⅳ"
+  },
+  {
+    "id": 2130100,
+    "name": "黑斧木妖",
+    "level": 22,
+    "hp": 550,
+    "exp": 38,
+    "image": "/images/monsters/2130100.png",
+    "map": "勇士部落东部"
+  },
+  {
+    "id": 2130103,
+    "name": "青蛇",
+    "level": 21,
+    "hp": 285,
+    "exp": 38,
+    "image": "/images/monsters/2130103.png",
+    "map": "地铁二号线<第1地区>"
+  },
+  {
+    "id": 2220100,
+    "name": "蓝蘑菇",
+    "level": 20,
+    "hp": 350,
+    "exp": 32,
+    "image": "/images/monsters/2220100.png",
+    "map": "射手村东部树林"
+  },
+  {
+    "id": 2230100,
+    "name": "火独眼兽",
+    "level": 27,
+    "hp": 720,
+    "exp": 50,
+    "image": "/images/monsters/2230100.png",
+    "map": "幽深蚂蚁洞Ⅰ"
+  },
+  {
+    "id": 2230102,
+    "name": "野猪",
+    "level": 25,
+    "hp": 550,
+    "exp": 42,
+    "image": "/images/monsters/2230102.png",
+    "map": "野猪的领土Ⅱ"
+  },
+  {
+    "id": 2230110,
+    "name": "木面怪人",
+    "level": 23,
+    "hp": 500,
+    "exp": 42,
+    "image": "/images/monsters/2230110.png",
+    "map": "遗迹发掘地Ⅰ"
+  },
+  {
+    "id": 2230111,
+    "name": "石面怪人",
+    "level": 24,
+    "hp": 600,
+    "exp": 45,
+    "image": "/images/monsters/2230111.png",
+    "map": "遗迹发掘地Ⅱ"
+  },
+  {
+    "id": 2300100,
+    "name": "蝙蝠",
+    "level": 20,
+    "hp": 300,
+    "exp": 33,
+    "image": "/images/monsters/2300100.png",
+    "map": "环乘区"
+  },
+  {
+    "id": 3110100,
+    "name": "鳄鱼",
+    "level": 32,
+    "hp": 1200,
+    "exp": 60,
+    "image": "/images/monsters/3110100.png",
+    "map": "沼泽地Ⅰ"
+  },
+  {
+    "id": 3210100,
+    "name": "火野猪",
+    "level": 32,
+    "hp": 1000,
+    "exp": 60,
+    "image": "/images/monsters/3210100.png",
+    "map": "东部岩山Ⅵ"
+  },
+  {
+    "id": 3210800,
+    "name": "猴子",
+    "level": 37,
+    "hp": 1500,
+    "exp": 77,
+    "image": "/images/monsters/3210800.png",
+    "map": "猴子森林I"
+  },
+  {
+    "id": 3230100,
+    "name": "风独眼兽",
+    "level": 35,
+    "hp": 1250,
+    "exp": 70,
+    "image": "/images/monsters/3230100.png",
+    "map": "猴林迷宫I"
+  },
+  {
+    "id": 3230101,
+    "name": "小幽灵",
+    "level": 35,
+    "hp": 1200,
+    "exp": 70,
+    "image": "/images/monsters/3230101.png",
+    "map": "地铁一号线<第2地区>"
+  },
+  {
+    "id": 3230102,
+    "name": "红螃蟹",
+    "level": 37,
+    "hp": 1950,
+    "exp": 80,
+    "image": "/images/monsters/3230102.png",
+    "map": "海边瓜棚"
+  },
+  {
+    "id": 4090000,
+    "name": "铁甲猪",
+    "level": 42,
+    "hp": 2200,
+    "exp": 99,
+    "image": "/images/monsters/4090000.png",
+    "map": "猪的海岸"
+  },
+  {
+    "id": 4130100,
+    "name": "土龙",
+    "level": 45,
+    "hp": 2700,
+    "exp": 105,
+    "image": "/images/monsters/4130100.png",
+    "map": "东部岩山Ⅶ"
+  },
+  {
+    "id": 4130101,
+    "name": "乌龟",
+    "level": 46,
+    "hp": 2550,
+    "exp": 110,
+    "image": "/images/monsters/4130101.png",
+    "map": "青螃蟹海滩Ⅱ"
+  },
+  {
+    "id": 4230100,
+    "name": "冰独眼兽",
+    "level": 40,
+    "hp": 2000,
+    "exp": 85,
+    "image": "/images/monsters/4230100.png",
+    "map": "北部森林训练场Ⅳ"
+  },
+  {
+    "id": 4230101,
+    "name": "僵尸猴",
+    "level": 40,
+    "hp": 1800,
+    "exp": 90,
+    "image": "/images/monsters/4230101.png",
+    "map": "猴子森林I"
+  },
+  {
+    "id": 4230102,
+    "name": "大幽灵",
+    "level": 48,
+    "hp": 2800,
+    "exp": 120,
+    "image": "/images/monsters/4230102.png",
+    "map": "地铁一号线<第3地区>"
+  },
+  {
+    "id": 4230104,
+    "name": "青螃蟹",
+    "level": 48,
+    "hp": 3000,
+    "exp": 128,
+    "image": "/images/monsters/4230104.png",
+    "map": "青螃蟹海滩Ⅰ"
+  },
+  {
+    "id": 5130101,
+    "name": "石头人",
+    "level": 55,
+    "hp": 4000,
+    "exp": 170,
+    "image": "/images/monsters/5130101.png",
+    "map": "森林迷宫IV"
+  },
+  {
+    "id": 5130102,
+    "name": "黑石头人",
+    "level": 58,
+    "hp": 4800,
+    "exp": 200,
+    "image": "/images/monsters/5130102.png",
+    "map": "森林迷宫III"
+  },
+  {
+    "id": 5130103,
+    "name": "黑鳄鱼",
+    "level": 52,
+    "hp": 3800,
+    "exp": 170,
+    "image": "/images/monsters/5130103.png",
+    "map": "鳄鱼潭Ⅰ"
+  },
+  {
+    "id": 5150000,
+    "name": "混种石头人",
+    "level": 59,
+    "hp": 6000,
+    "exp": 210,
+    "image": "/images/monsters/5150000.png",
+    "map": "森林迷宫V"
+  },
+  {
+    "id": 5150001,
+    "name": "骷髅士兵",
+    "level": 57,
+    "hp": 4600,
+    "exp": 190,
+    "image": "/images/monsters/5150001.png",
+    "map": "遗迹之墓Ⅱ"
+  },
+  {
+    "id": 5300100,
+    "name": "巫婆",
+    "level": 55,
+    "hp": 4000,
+    "exp": 175,
+    "image": "/images/monsters/5300100.png",
+    "map": "巫婆森林Ⅰ"
+  },
+  {
+    "id": 6130100,
+    "name": "赤龙",
+    "level": 60,
+    "hp": 6000,
+    "exp": 220,
+    "image": "/images/monsters/6130100.png",
+    "map": "危险的峡谷Ⅱ"
+  },
+  {
+    "id": 6130101,
+    "name": "蘑菇王",
+    "level": 60,
+    "hp": 20000,
+    "exp": 1200,
+    "image": "/images/monsters/6130101.png",
+    "map": "铁甲猪公园Ⅲ"
+  },
+  {
+    "id": 6230100,
+    "name": "怪猫",
+    "level": 62,
+    "hp": 5500,
+    "exp": 240,
+    "image": "/images/monsters/6230100.png",
+    "map": "冰独眼兽洞穴Ⅱ"
+  },
+  {
+    "id": 6230600,
+    "name": "冰龙",
+    "level": 64,
+    "hp": 7700,
+    "exp": 250,
+    "image": "/images/monsters/6230600.png",
+    "map": "龙族之地"
+  },
+  {
+    "id": 6230601,
+    "name": "黑恐龙",
+    "level": 68,
+    "hp": 13000,
+    "exp": 265,
+    "image": "/images/monsters/6230601.png",
+    "map": "冰冷的摇篮"
+  },
+  {
+    "id": 6230602,
+    "name": "骷髅士官",
+    "level": 63,
+    "hp": 7500,
+    "exp": 240,
+    "image": "/images/monsters/6230602.png",
+    "map": "遗迹之墓Ⅳ"
+  },
+  {
+    "id": 7130100,
+    "name": "月牙牛魔王",
+    "level": 70,
+    "hp": 15000,
+    "exp": 270,
+    "image": "/images/monsters/7130100.png",
+    "map": "寺院通道Ⅰ"
+  },
+  {
+    "id": 7130101,
+    "name": "长枪牛魔王",
+    "level": 75,
+    "hp": 18000,
+    "exp": 350,
+    "image": "/images/monsters/7130101.png",
+    "map": "寺院通道Ⅲ"
+  },
+  {
+    "id": 8130100,
+    "name": "蝙蝠怪",
+    "level": 80,
+    "hp": 50000,
+    "exp": 2000,
+    "image": "/images/monsters/8130100.png",
+    "map": "被诅咒的寺院"
+  },
+  {
+    "id": 8140101,
+    "name": "暗黑半人马",
+    "level": 88,
+    "hp": 37000,
+    "exp": 1600,
+    "image": "/images/monsters/8140101.png",
+    "map": "火焰死亡战场"
+  },
+  {
+    "id": 8140102,
+    "name": "火焰半人马",
+    "level": 88,
+    "hp": 37000,
+    "exp": 1600,
+    "image": "/images/monsters/8140102.png",
+    "map": "火焰半人马领土"
+  },
+  {
+    "id": 8140103,
+    "name": "寒冰半人马",
+    "level": 88,
+    "hp": 37000,
+    "exp": 1600,
+    "image": "/images/monsters/8140103.png",
+    "map": "冰冷死亡战场"
+  },
+  {
+    "id": 8140110,
+    "name": "邪恶绵羊",
+    "level": 85,
+    "hp": 32000,
+    "exp": 1420,
+    "image": "/images/monsters/8140110.png",
+    "map": "森林岔道"
+  },
+  {
+    "id": 8140111,
+    "name": "恶魔绵羊",
+    "level": 88,
+    "hp": 37000,
+    "exp": 1620,
+    "image": "/images/monsters/8140111.png",
+    "map": "森林岔道"
+  },
+  {
+    "id": 8140600,
+    "name": "骨骸鱼",
+    "level": 92,
+    "hp": 42500,
+    "exp": 2000,
+    "image": "/images/monsters/8140600.png",
+    "map": "深海峡谷1"
+  },
+  {
+    "id": 8140700,
+    "name": "蓝海龟龙",
+    "level": 90,
+    "hp": 40000,
+    "exp": 1780,
+    "image": "/images/monsters/8140700.png",
+    "map": "龙林入口"
+  },
+  {
+    "id": 8140701,
+    "name": "红海龟龙",
+    "level": 93,
+    "hp": 49000,
+    "exp": 2100,
+    "image": "/images/monsters/8140701.png",
+    "map": "龙林入口"
+  },
+  {
+    "id": 8140702,
+    "name": "犀牛龙",
+    "level": 95,
+    "hp": 50000,
+    "exp": 2280,
+    "image": "/images/monsters/8140702.png",
+    "map": "龙林2"
+  },
+  {
+    "id": 8140703,
+    "name": "犀牛龙怪",
+    "level": 97,
+    "hp": 55000,
+    "exp": 2500,
+    "image": "/images/monsters/8140703.png",
+    "map": "龙林3"
+  },
+  {
+    "id": 8141000,
+    "name": "大海贼",
+    "level": 93,
+    "hp": 50000,
+    "exp": 2100,
+    "image": "/images/monsters/8141000.png",
+    "map": "扭曲的时间<4>"
+  },
+  {
+    "id": 9300003,
+    "name": "绿水灵王",
+    "level": 40,
+    "hp": 8000,
+    "exp": 800,
+    "image": "/images/monsters/9300003.png",
+    "map": "组队训练场<最后阶段>"
+  },
+  {
+    "id": 9300058,
+    "name": "猪",
+    "level": 7,
+    "hp": 75,
+    "exp": 15,
+    "image": "/images/monsters/9300058.png",
+    "map": "猪猪村庄"
+  },
+  {
+    "id": 9420531,
+    "name": "心疤狮",
+    "level": 59,
+    "hp": 5800,
+    "exp": 220,
+    "image": "/images/monsters/9420531.png",
+    "map": "大红花路 2"
+  },
+  {
+    "id": 9420532,
+    "name": "高帽暴力熊",
+    "level": 59,
+    "hp": 6200,
+    "exp": 210,
+    "image": "/images/monsters/9420532.png",
+    "map": "大红花路 2"
+  },
+  {
+    "id": 9420533,
+    "name": "影子猎犬",
+    "level": 61,
+    "hp": 6000,
+    "exp": 235,
+    "image": "/images/monsters/9420533.png",
+    "map": "泥泞的河岸 2"
+  },
+  {
+    "id": 9420534,
+    "name": "蛇笛师",
+    "level": 65,
+    "hp": 9800,
+    "exp": 255,
+    "image": "/images/monsters/9420534.png",
+    "map": "泥泞的河岸 3"
+  },
+  {
+    "id": 9420540,
+    "name": "马戏团暴力熊",
+    "level": 94,
+    "hp": 43000,
+    "exp": 2500,
+    "image": "/images/monsters/9420540.png",
+    "map": "阴森世界入口"
+  },
+  {
+    "id": 9600012,
+    "name": "黑熊",
+    "level": 80,
+    "hp": 40500,
+    "exp": 850,
+    "image": "/images/monsters/9600012.png",
+    "map": "山脚"
+  },
+  {
+    "id": 9600013,
+    "name": "白老虎",
+    "level": 90,
+    "hp": 63000,
+    "exp": 1800,
+    "image": "/images/monsters/9600013.png",
+    "map": "山脚"
+  },
+  {
+    "id": 9600014,
+    "name": "巨鹰",
+    "level": 95,
+    "hp": 78000,
+    "exp": 2300,
+    "image": "/images/monsters/9600014.png",
+    "map": "山路1"
+  },
+  {
+    "id": 9600015,
+    "name": "男飞贼",
+    "level": 95,
+    "hp": 78000,
+    "exp": 2300,
+    "image": "/images/monsters/9600015.png",
+    "map": "山腰"
+  },
+  {
+    "id": 9600016,
+    "name": "女飞贼",
+    "level": 95,
+    "hp": 78000,
+    "exp": 2300,
+    "image": "/images/monsters/9600016.png",
+    "map": "山腰"
+  },
+  {
+    "id": 9600017,
+    "name": "香炉怪",
+    "level": 100,
+    "hp": 85500,
+    "exp": 3000,
+    "image": "/images/monsters/9600017.png",
+    "map": "广场"
+  },
+  {
+    "id": 9600018,
+    "name": "木鱼妖",
+    "level": 105,
+    "hp": 102000,
+    "exp": 3700,
+    "image": "/images/monsters/9600018.png",
+    "map": "广场"
+  },
+  {
+    "id": 9600019,
+    "name": "小金人",
+    "level": 130,
+    "hp": 270000,
+    "exp": 8000,
+    "image": "/images/monsters/9600019.png",
+    "map": "藏经阁五到六层"
+  },
+  {
+    "id": 9600020,
+    "name": "小铜人",
+    "level": 120,
+    "hp": 135000,
+    "exp": 5000,
+    "image": "/images/monsters/9600020.png",
+    "map": "藏经阁一到二层"
+  },
+  {
+    "id": 9600021,
+    "name": "巨化金人",
+    "level": 130,
+    "hp": 270000,
+    "exp": 8000,
+    "image": "/images/monsters/9600021.png",
+    "map": "藏经阁七层"
+  },
+  {
+    "id": 9600022,
+    "name": "巨化银人",
+    "level": 125,
+    "hp": 225000,
+    "exp": 7500,
+    "image": "/images/monsters/9600022.png",
+    "map": "藏经阁三到四层"
+  },
+  {
+    "id": 9600023,
+    "name": "铜人",
+    "level": 120,
+    "hp": 135000,
+    "exp": 5000,
+    "image": "/images/monsters/9600023.png",
+    "map": "藏经阁一到二层"
+  },
+  {
+    "id": 9600024,
+    "name": "银人",
+    "level": 125,
+    "hp": 225000,
+    "exp": 7500,
+    "image": "/images/monsters/9600024.png",
+    "map": "藏经阁三到四层"
+  }
+]
