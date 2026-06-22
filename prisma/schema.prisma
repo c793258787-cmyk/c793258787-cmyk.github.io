@@ -38,6 +38,7 @@ model Monster {
   description String
   mapName     String
   spawnRate   String
+  image       String?
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
   drops       Drop[]
