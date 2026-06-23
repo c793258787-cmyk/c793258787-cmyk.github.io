@@ -1756,11 +1756,24 @@ body {
   color: rgba(244, 244, 245, 0.42);
 }
 
-.quiz-share-export-sandbox .quiz-share-card {
+.quiz-share-export-sandbox .quiz-share-card,
+.quiz-share-card-exporting {
   width: 360px;
   max-width: none;
-  overflow: visible;
+  overflow: visible !important;
+  height: auto !important;
+  min-height: auto !important;
   box-shadow: none;
+}
+
+.quiz-share-export-sandbox .quiz-share-card-inner,
+.quiz-share-card-exporting .quiz-share-card-inner {
+  overflow: visible;
+}
+
+.quiz-share-export-sandbox .quiz-share-card-portrait,
+.quiz-share-card-exporting .quiz-share-card-portrait {
+  opacity: 1 !important;
 }
 
 .quiz-share-preview {
@@ -1841,6 +1854,8 @@ body {
   width: min(100%, 20rem);
   height: auto;
   max-width: none;
+  max-height: none;
+  object-fit: contain;
   border-radius: 0.75rem;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
   -webkit-touch-callout: default;

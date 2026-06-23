@@ -6,10 +6,13 @@ import {
   canvasToBlob,
   downloadBlob,
   getQuizShareFilename,
+  isLikelyCompleteShareExport,
   isMobileDevice,
   isWeChatBrowser,
+  readBlobImageSize,
   renderQuizShareCard,
-  tryNativeShare
+  tryNativeShare,
+  waitForShareCardReady
 } from "@/lib/quiz-export-card";
 import { QuizShareImagePreview } from "@/components/quiz/QuizShareImagePreview";
 
@@ -25,21 +28,16 @@ type PreviewState = {
   canNativeShare: boolean;
 };
 
-function waitForPortrait(root: HTMLElement | null) {
-  if (!root) {
-    return Promise.resolve();
+async function createShareBlob(card: HTMLElement) {
+  const canvas = await renderQuizShareCard(card);
+  const blob = await canvasToBlob(canvas);
+  const size = await readBlobImageSize(blob);
+
+  if (!isLikelyCompleteShareExport(size)) {
+    throw new Error("Incomplete share export");
   }
 
-  const img = root.querySelector(".quiz-share-card-portrait");
-
-  if (!(img instanceof HTMLImageElement) || (img.complete && img.naturalWidth > 0)) {
-    return Promise.resolve();
-  }
-
-  return new Promise<void>((resolve) => {
-    img.onload = () => resolve();
-    img.onerror = () => resolve();
-  });
+  return blob;
 }
 
 export function QuizResultShare({ cardRef, job }: QuizResultShareProps) {
@@ -64,15 +62,18 @@ export function QuizResultShare({ cardRef, job }: QuizResultShareProps) {
     setExportReady(false);
 
     const warmExport = async () => {
-      await waitForPortrait(cardRef.current);
+      if (!cardRef.current) {
+        return;
+      }
+
+      await waitForShareCardReady(cardRef.current);
 
       if (cancelled || !cardRef.current) {
         return;
       }
 
       try {
-        const canvas = await renderQuizShareCard(cardRef.current);
-        const blob = await canvasToBlob(canvas);
+        const blob = await createShareBlob(cardRef.current);
 
         if (cancelled) {
           return;
@@ -87,30 +88,13 @@ export function QuizResultShare({ cardRef, job }: QuizResultShareProps) {
       }
     };
 
-    const startWarm = () => {
+    const timerId = window.setTimeout(() => {
       void warmExport();
-    };
-
-    let idleId = 0;
-    let timerId = 0;
-    const hasIdleCallback = typeof window.requestIdleCallback === "function";
-
-    if (hasIdleCallback) {
-      idleId = window.requestIdleCallback(startWarm, { timeout: 1200 });
-    } else {
-      timerId = window.setTimeout(startWarm, 500);
-    }
+    }, 800);
 
     return () => {
       cancelled = true;
-
-      if (idleId && typeof window.cancelIdleCallback === "function") {
-        window.cancelIdleCallback(idleId);
-      }
-
-      if (timerId) {
-        window.clearTimeout(timerId);
-      }
+      window.clearTimeout(timerId);
     };
   }, [cardRef, job.id]);
 
@@ -168,21 +152,31 @@ export function QuizResultShare({ cardRef, job }: QuizResultShareProps) {
   async function handleShare() {
     if (!cardRef.current || generating) return;
 
-    const filename = getQuizShareFilename(job.name);
-    const cached = exportCacheRef.current?.jobId === job.id ? exportCacheRef.current.blob : null;
-
-    if (cached) {
-      await deliverBlob(cached, filename);
-      return;
-    }
-
     setGenerating(true);
 
+    const filename = getQuizShareFilename(job.name);
+
     try {
-      const canvas = await renderQuizShareCard(cardRef.current);
-      const blob = await canvasToBlob(canvas);
-      exportCacheRef.current = { jobId: job.id, blob };
-      setExportReady(true);
+      let blob = exportCacheRef.current?.jobId === job.id ? exportCacheRef.current.blob : null;
+
+      if (blob) {
+        try {
+          const size = await readBlobImageSize(blob);
+
+          if (!isLikelyCompleteShareExport(size)) {
+            blob = null;
+          }
+        } catch {
+          blob = null;
+        }
+      }
+
+      if (!blob) {
+        blob = await createShareBlob(cardRef.current);
+        exportCacheRef.current = { jobId: job.id, blob };
+        setExportReady(true);
+      }
+
       await deliverBlob(blob, filename);
     } catch {
       window.alert("图片生成失败，请稍后重试。");
@@ -212,12 +206,7 @@ export function QuizResultShare({ cardRef, job }: QuizResultShareProps) {
   return (
     <>
       <div className="quiz-share-section quiz-share-section-compact quiz-reveal quiz-reveal-4">
-        <button
-          type="button"
-          onClick={handleShare}
-          disabled={generating}
-          className="quiz-share-btn"
-        >
+        <button type="button" onClick={handleShare} disabled={generating} className="quiz-share-btn">
           {buttonLabel}
         </button>
         <p className="quiz-share-section-tip">
