@@ -418,6 +418,29 @@ body {
   --quiz-h5-safe-bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 48px));
 }
 
+.quiz-h5-shell:has(.quiz-h5-intro) {
+  background:
+    radial-gradient(ellipse 110% 75% at 50% -5%, rgba(244, 63, 94, 0.28) 0%, transparent 58%),
+    radial-gradient(ellipse 85% 55% at 85% 45%, rgba(168, 85, 247, 0.2) 0%, transparent 52%),
+    radial-gradient(ellipse 75% 50% at 15% 75%, rgba(251, 191, 36, 0.14) 0%, transparent 48%),
+    linear-gradient(180deg, #121018 0%, #0a0a0c 45%, #08080a 100%);
+}
+
+.quiz-h5-shell:has(.quiz-h5-intro)::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(251, 113, 133, 0.12) 0%, transparent 42%),
+    linear-gradient(180deg, transparent 0%, rgba(10, 10, 12, 0.15) 55%, rgba(10, 10, 12, 0.55) 100%);
+}
+
+.quiz-h5-shell:has(.quiz-h5-intro) .quiz-orb {
+  opacity: 0.7;
+}
+
 .quiz-h5-shell,
 .quiz-h5-shell *,
 .quiz-h5-shell *::before,
@@ -536,8 +559,54 @@ body {
   margin: 0 auto;
 }
 
+.quiz-h5-content:has(.quiz-h5-intro) {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: calc(100dvh - 3.25rem);
+}
+
+.quiz-h5-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.quiz-h5-intro .quiz-h5-eyebrow {
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+}
+
+.quiz-h5-intro .quiz-h5-title {
+  margin-top: 1rem;
+  font-size: clamp(1.875rem, 8.5vw, 2.625rem);
+  line-height: 1.35;
+  max-width: 16em;
+}
+
+.quiz-h5-intro .quiz-h5-lead {
+  margin-top: 1.25rem;
+  max-width: 18rem;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: rgba(244, 244, 245, 0.62);
+}
+
+.quiz-h5-intro .quiz-h5-cta {
+  width: min(100%, 17.5rem);
+  min-width: unset;
+  min-height: 52px;
+  margin-top: 2rem;
+  padding: 0.875rem 2rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
 .quiz-h5-content:has(.quiz-h5-result) {
   justify-content: flex-start;
+  align-items: stretch;
+  text-align: left;
   min-height: auto;
   padding-top: 0;
 }

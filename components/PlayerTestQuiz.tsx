@@ -103,7 +103,6 @@ export function PlayerTestQuiz() {
             <button type="button" onClick={startQuiz} className="quiz-h5-cta">
               开始测试
             </button>
-            <p className="quiz-h5-footnote">滑动选择 · 沉浸式体验</p>
           </section>
         ) : null}
 
