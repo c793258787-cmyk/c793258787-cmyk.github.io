@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { isWeChatBrowser } from "@/lib/quiz-export-card";
 
 type QuizShareImagePreviewProps = {
@@ -18,6 +18,7 @@ export function QuizShareImagePreview({
   sharing = false,
   canNativeShare = false
 }: QuizShareImagePreviewProps) {
+  const scrollRef = useRef<HTMLDivElement>(null);
   const inWeChat = isWeChatBrowser();
 
   useEffect(() => {
@@ -28,6 +29,10 @@ export function QuizShareImagePreview({
       document.body.style.overflow = previousOverflow;
     };
   }, []);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo(0, 0);
+  }, [imageUrl]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -42,29 +47,37 @@ export function QuizShareImagePreview({
 
   return (
     <div className="quiz-share-preview" role="dialog" aria-modal="true" aria-label="分享卡片预览">
-      <button type="button" className="quiz-share-preview-backdrop" aria-label="关闭预览" onClick={onClose} />
-
-      <div className="quiz-share-preview-panel">
+      <div className="quiz-share-preview-topbar">
         <p className="quiz-share-preview-hint">
           {inWeChat
-            ? "长按下方图片，选择「保存图片」存入相册，或「转发给朋友」直接发送图片"
-            : "长按下方图片保存到相册；保存后在微信聊天中选择图片发送给好友"}
+            ? "长按下方完整图片 →「保存图片」或「转发给朋友」"
+            : "长按下方完整图片保存；保存后在微信聊天中选择图片发送"}
         </p>
+        <button type="button" className="quiz-share-preview-close" onClick={onClose} aria-label="关闭预览">
+          关闭
+        </button>
+      </div>
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={imageUrl} alt="冒险岛灵魂职业分享卡片" className="quiz-share-preview-image" />
+      <div ref={scrollRef} className="quiz-share-preview-scroll">
+        <div className="quiz-share-preview-image-wrap">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={imageUrl} alt="冒险岛灵魂职业分享卡片" className="quiz-share-preview-image" />
+        </div>
+        <p className="quiz-share-preview-footnote">↑ 可上下滑动查看完整卡片，请长按图片本身保存</p>
+      </div>
 
-        <div className="quiz-share-preview-actions">
-          {canNativeShare && onShare ? (
-            <button type="button" className="quiz-share-preview-btn quiz-share-preview-btn-primary" onClick={onShare} disabled={sharing}>
-              {sharing ? "正在唤起分享…" : "系统分享"}
-            </button>
-          ) : null}
-          <button type="button" className="quiz-share-preview-btn" onClick={onClose}>
-            关闭
+      {canNativeShare && onShare ? (
+        <div className="quiz-share-preview-footer">
+          <button
+            type="button"
+            className="quiz-share-preview-btn quiz-share-preview-btn-primary"
+            onClick={onShare}
+            disabled={sharing}
+          >
+            {sharing ? "正在唤起分享…" : "系统分享"}
           </button>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }
