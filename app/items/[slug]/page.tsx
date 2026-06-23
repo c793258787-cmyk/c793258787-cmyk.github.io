@@ -6,6 +6,7 @@ import { Stat } from "@/components/Stat";
 import { absoluteUrl, serverName } from "@/lib/seo";
 import { formatDropChance, titleCase } from "@/lib/format";
 import { getItem } from "@/lib/data";
+import { breadcrumbs } from "@/lib/breadcrumbs";
 
 type ItemDetailPageProps = {
   params: { slug: string };
@@ -47,7 +48,12 @@ export default async function ItemDetailPage({ params }: ItemDetailPageProps) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <PageHeader eyebrow={titleCase(item.type)} title={item.name} description={item.description} />
+      <PageHeader
+        eyebrow={titleCase(item.type)}
+        title={item.name}
+        description={item.description}
+        breadcrumbs={breadcrumbs({ label: "物品资料", href: "/items" }, { label: item.name })}
+      />
       <section className="mx-auto max-w-7xl px-4 py-10 lg:px-8">
         <dl className="grid gap-4 sm:grid-cols-3">
           <Stat label="类型" value={titleCase(item.type)} />

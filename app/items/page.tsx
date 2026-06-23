@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { Pagination } from "@/components/Pagination";
 import { getItems } from "@/lib/data";
 import { titleCase } from "@/lib/format";
+import { breadcrumbs } from "@/lib/breadcrumbs";
 
 const PAGE_SIZE = 50;
 
@@ -32,6 +33,7 @@ export default async function ItemsPage({ searchParams }: ItemsPageProps) {
         eyebrow="物品资料"
         title="物品资料库"
         description={`共收录 ${items.length} 条物品，每页 ${PAGE_SIZE} 条 · 第 ${currentPage}/${totalPages} 页`}
+        breadcrumbs={breadcrumbs({ label: "物品资料" })}
       />
       <div className="mx-auto max-w-7xl px-4 py-8 lg:px-8">
         <section className="grid grid-cols-2 gap-4 md:grid-cols-4" aria-label="物品列表">

@@ -22,3 +22,15 @@ const labels: Record<string, string> = {
 export function titleCase(value: string) {
   return labels[value] ?? value;
 }
+
+export function formatMonsterMapLabel(mapName: string | null | undefined) {
+  const map = mapName?.trim();
+  if (map && map !== "未知地图") return map;
+  return "地图信息暂缺";
+}
+
+export function formatMonsterHeaderDescription(mapName: string | null | undefined) {
+  const map = mapName?.trim();
+  if (map && map !== "未知地图") return `出没地图：${map}`;
+  return "地图信息暂缺";
+}

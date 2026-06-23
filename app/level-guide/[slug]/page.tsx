@@ -5,6 +5,7 @@ import { GuideMarkdown } from "@/components/guides/GuideMarkdown";
 import { PageHeader } from "@/components/PageHeader";
 import { categoryAccent, formatGuideDate } from "@/lib/guides/format";
 import { getGuide, getGuides } from "@/lib/guides/loader";
+import { breadcrumbs } from "@/lib/breadcrumbs";
 
 type GuideArticlePageProps = {
   params: { slug: string };
@@ -32,7 +33,13 @@ export default function GuideArticlePage({ params }: GuideArticlePageProps) {
 
   return (
     <>
-      <PageHeader compact eyebrow={post.category} title={post.title} description={post.excerpt} />
+      <PageHeader
+        compact
+        eyebrow={post.category}
+        title={post.title}
+        description={post.excerpt}
+        breadcrumbs={breadcrumbs({ label: "游戏攻略", href: "/level-guide" }, { label: post.title })}
+      />
 
       <section className="mx-auto max-w-3xl px-4 py-8 lg:px-8">
         <div className="mb-8 flex flex-wrap items-center gap-3 border-b border-zinc-800/60 pb-6 text-sm text-zinc-500">

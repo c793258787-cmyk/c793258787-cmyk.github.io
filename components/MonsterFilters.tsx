@@ -22,7 +22,7 @@ export function MonsterFilters({ filters, totalCount, filteredCount }: MonsterFi
             type="search"
             name="q"
             defaultValue={filters.q}
-            placeholder="输入怪物名称、地图或 slug"
+            placeholder="输入怪物名称或地图"
             className="h-10 w-full rounded-md border border-zinc-800/60 bg-zinc-900 px-3 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-zinc-700 focus:outline-none"
           />
         </label>

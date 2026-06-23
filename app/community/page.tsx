@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { breadcrumbs } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "加入群聊",
@@ -25,6 +27,7 @@ export default function CommunityPage() {
   return (
     <section className="py-10 sm:py-14">
       <div className="mx-auto max-w-5xl px-4 lg:px-8">
+        <Breadcrumbs items={breadcrumbs({ label: "加入群聊" })} className="mb-6" />
         <h1 className="text-center text-2xl font-semibold text-zinc-100">加入群聊</h1>
         <p className="mt-2 text-center text-sm text-zinc-400 sm:text-base">
           微信扫码添加作者，或加入玩家交流群。群聊二维码失效可添加作者

@@ -13,6 +13,7 @@ import {
   parseMonsterListFilters,
   sortMonsters
 } from "@/lib/monster-filters";
+import { breadcrumbs } from "@/lib/breadcrumbs";
 
 const PAGE_SIZE = 50;
 
@@ -47,7 +48,13 @@ export default async function MonstersPage({ searchParams }: MonstersPageProps) 
 
   return (
     <>
-      <PageHeader compact eyebrow="怪物资料" title="怪物资料库" description={description} />
+      <PageHeader
+        compact
+        eyebrow="怪物资料"
+        title="怪物资料库"
+        description={description}
+        breadcrumbs={breadcrumbs({ label: "怪物资料" })}
+      />
       <div className="mx-auto max-w-7xl px-4 py-8 lg:px-8">
         <MonsterFilters filters={filters} totalCount={monsters.length} filteredCount={filteredMonsters.length} />
 

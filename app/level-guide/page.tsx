@@ -4,6 +4,7 @@ import { GuideCard } from "@/components/guides/GuideCard";
 import { GuideCategoryNav } from "@/components/guides/GuideCategoryNav";
 import { getGuides, getGuidesByCategory } from "@/lib/guides/loader";
 import { guideCategories, type GuideCategory } from "@/lib/guides/types";
+import { breadcrumbs } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "游戏攻略",
@@ -30,7 +31,8 @@ export default function LevelGuidePage({ searchParams }: LevelGuidePageProps) {
         compact
         eyebrow="游戏攻略"
         title="攻略与资讯"
-        description="把抖音里的怀旧服心得整理成可收藏的图文攻略。新增内容只需在 content/guides/ 添加 Markdown 文件。"
+        description="把抖音里的怀旧服心得整理成可收藏的图文攻略，练级、职业、日常心得一站查阅。"
+        breadcrumbs={breadcrumbs({ label: "游戏攻略" })}
       />
 
       <section className="mx-auto max-w-7xl px-4 py-8 lg:px-8">
@@ -38,8 +40,8 @@ export default function LevelGuidePage({ searchParams }: LevelGuidePageProps) {
 
         {guides.length === 0 ? (
           <div className="mt-8 rounded-lg border border-dashed border-zinc-800/80 bg-panel p-10 text-center">
-            <p className="text-zinc-300">这个分类下还没有攻略。</p>
-            <p className="mt-2 text-sm text-zinc-500">去 content/guides/ 新建一篇 Markdown 就能在这里显示。</p>
+            <p className="text-zinc-300">{category ? `「${category}」分类下还没有攻略。` : "攻略内容正在整理中。"}</p>
+            <p className="mt-2 text-sm text-zinc-500">我们会持续从抖音同步新的心得，欢迎稍后再来看看。</p>
           </div>
         ) : (
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">

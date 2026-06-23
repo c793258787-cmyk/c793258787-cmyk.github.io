@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
 import { Stat } from "@/components/Stat";
-import { formatDropChance, titleCase } from "@/lib/format";
+import { formatDropChance, formatMonsterHeaderDescription, titleCase } from "@/lib/format";
 import { absoluteUrl, serverName } from "@/lib/seo";
 import { getMonster } from "@/lib/data";
+import { breadcrumbs } from "@/lib/breadcrumbs";
 
 type MonsterDetailPageProps = {
   params: { slug: string };
@@ -37,12 +38,13 @@ export default async function MonsterDetailPage({ params }: MonsterDetailPagePro
   }
 
   const monsterImage = "image" in monster && typeof monster.image === "string" ? monster.image : null;
+  const mapDescription = formatMonsterHeaderDescription(monster.mapName);
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Dataset",
     name: `${monster.name}怪物资料`,
-    description: monster.description,
+    description: mapDescription,
     url: absoluteUrl(`/monsters/${monster.slug}`),
     about: serverName,
     ...(monsterImage ? { image: absoluteUrl(monsterImage) } : {})
@@ -52,11 +54,12 @@ export default async function MonsterDetailPage({ params }: MonsterDetailPagePro
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <PageHeader
-        eyebrow={`${monster.region}怪物`}
+        eyebrow="怪物资料"
         title={monster.name}
-        description={monster.description}
+        description={mapDescription}
         image={monsterImage}
         imageAlt={`${monster.name}怪物图片`}
+        breadcrumbs={breadcrumbs({ label: "怪物资料", href: "/monsters" }, { label: monster.name })}
       />
       <section className="mx-auto max-w-7xl px-4 py-10 lg:px-8">
         <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

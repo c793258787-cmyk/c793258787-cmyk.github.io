@@ -11,6 +11,17 @@ body {
   color: #f4f4f5;
 }
 
+/* iOS / 微信内置浏览器：输入框字号 < 16px 会自动放大页面 */
+@layer base {
+  @media (max-width: 1023px) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="hidden"]),
+    select,
+    textarea {
+      font-size: 16px;
+    }
+  }
+}
+
 .hero-gradient {
   background:
     radial-gradient(ellipse 80% 60% at 50% -10%, rgba(244, 63, 94, 0.08), transparent),

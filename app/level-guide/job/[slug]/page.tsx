@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/PageHeader";
 import { JobRadarChart } from "@/components/JobRadarChart";
 import { jobLevelGuides, jobMatchWeights, jobs, jobsById } from "@/lib/jobs";
+import { breadcrumbs } from "@/lib/breadcrumbs";
 
 type JobLevelGuidePageProps = {
   params: { slug: string };
@@ -45,6 +46,7 @@ export default function JobLevelGuidePage({ params }: JobLevelGuidePageProps) {
         eyebrow={`${job.groupLabel} · ${job.family}`}
         title={`${job.name}练级指南`}
         description={guide.summary}
+        breadcrumbs={breadcrumbs({ label: "游戏攻略", href: "/level-guide" }, { label: `${job.name}练级指南` })}
       />
       <section className="mx-auto max-w-3xl px-4 py-8 lg:px-8">
         {weights ? (

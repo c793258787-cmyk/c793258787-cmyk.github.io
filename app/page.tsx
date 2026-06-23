@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { HomeCommunityBanner } from "@/components/HomeCommunityBanner";
 import { MonsterDataCard } from "@/components/MonsterDataCard";
 import { SearchBar } from "@/components/SearchBar";
+import { homeBreadcrumbs } from "@/lib/breadcrumbs";
 import { getGuides } from "@/lib/guides/loader";
 import { getMonsters } from "@/lib/data";
 import { siteDescription, siteName } from "@/lib/seo";
@@ -49,6 +51,9 @@ export default async function HomePage() {
     <>
       <section className="hero-gradient border-b border-zinc-800/50 py-14 text-center sm:py-16">
         <div className="mx-auto flex max-w-7xl flex-col items-center px-4 lg:px-8">
+          <div className="mb-4 w-full text-left">
+            <Breadcrumbs items={homeBreadcrumbs()} />
+          </div>
           <p className="text-sm font-medium text-rose-500">冒险岛怀旧服</p>
           <h1 className="mt-2 text-4xl font-semibold tracking-tight text-zinc-100 sm:text-5xl">{siteName}</h1>
           <p className="mt-2 max-w-xl text-zinc-400">{siteDescription}</p>

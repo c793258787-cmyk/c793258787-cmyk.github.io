@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
 import { formatDropChance, titleCase } from "@/lib/format";
 import { getDrops } from "@/lib/data";
+import { breadcrumbs } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "掉落查询",
@@ -21,6 +22,7 @@ export default async function DropsPage() {
         eyebrow="掉落查询"
         title="冒险岛掉落查询"
         description={`共 ${drops.length} 条掉落记录，按怪物、物品、概率和地图整理，点击名称可进入详情页。`}
+        breadcrumbs={breadcrumbs({ label: "掉落查询" })}
       />
       <section className="mx-auto max-w-7xl px-4 py-10 lg:px-8">
         <div className="overflow-x-auto rounded-md border border-zinc-800/60 bg-panel">

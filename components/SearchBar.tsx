@@ -6,6 +6,26 @@ import type { SearchResult } from "@/lib/services/search.service";
 
 const emptyResults: SearchResult = { monsters: [], items: [] };
 
+function SearchIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={16}
+      height={16}
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+  );
+}
+
 type SearchBarProps = {
   variant?: "hero" | "nav";
 };
@@ -106,15 +126,21 @@ export function SearchBar({ variant = "hero" }: SearchBarProps) {
             }}
             placeholder="搜索怪物 (支持拼音简写...)"
             autoComplete="off"
-            className={`search-focus-input ${isNav ? "h-9 pr-14 text-sm" : "h-12 pr-20 text-sm sm:text-base"} w-full rounded-md border border-zinc-800/60 bg-zinc-900 px-3 text-zinc-100 placeholder:text-zinc-500 focus:outline-none`}
+            className={`search-focus-input ${isNav ? "h-10 pr-14 text-base lg:h-9 lg:text-sm" : "h-12 pr-20 text-base"} w-full rounded-md border border-zinc-800/60 bg-zinc-900 px-3 text-zinc-100 placeholder:text-zinc-500 focus:outline-none`}
           />
           <button
             type="submit"
             disabled={isLoading}
-            className={`absolute right-1.5 top-1/2 -translate-y-1/2 rounded border border-zinc-700/80 bg-zinc-800 font-medium text-zinc-400 transition-colors hover:border-zinc-600 hover:text-zinc-100 disabled:opacity-50 ${isNav ? "px-2 py-1 text-[10px]" : "px-3 py-1.5 text-xs"}`}
+            className={`absolute right-1.5 top-1/2 flex -translate-y-1/2 items-center justify-center rounded border border-zinc-700/80 bg-zinc-800 text-zinc-400 transition-colors hover:border-zinc-600 hover:text-zinc-100 disabled:opacity-50 ${isNav ? "h-8 w-8" : "px-3 py-1.5 text-xs font-medium"}`}
             aria-label="搜索"
           >
-            {isLoading ? "..." : isNav ? "⌘K" : "搜索"}
+            {isLoading ? (
+              <span className={isNav ? "text-xs" : undefined}>...</span>
+            ) : isNav ? (
+              <SearchIcon />
+            ) : (
+              "搜索"
+            )}
           </button>
         </form>
       </div>
