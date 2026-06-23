@@ -1817,27 +1817,28 @@ body {
   cursor: pointer;
 }
 
-.quiz-share-preview-scroll {
+.quiz-share-preview-stage {
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  padding: 1rem 1rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 0.75rem 1rem;
 }
 
-.quiz-share-preview-image-wrap {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+.quiz-share-preview-image-frame {
   position: relative;
-  min-height: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 360px);
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 7.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
 }
 
 .quiz-share-preview-image-skeleton {
   position: absolute;
   inset: 0;
-  max-width: 20rem;
-  margin: 0 auto;
   border-radius: 0.75rem;
   background: linear-gradient(
     110deg,
@@ -1851,11 +1852,12 @@ body {
 
 .quiz-share-preview-image {
   display: block;
-  width: min(100%, 20rem);
+  width: auto;
   height: auto;
-  max-width: none;
-  max-height: none;
+  max-width: 100%;
+  max-height: calc(100dvh - 7.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   object-fit: contain;
+  object-position: center;
   border-radius: 0.75rem;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
   -webkit-touch-callout: default;
@@ -1867,15 +1869,6 @@ body {
 
 .quiz-share-preview-image-ready {
   opacity: 1;
-}
-
-.quiz-share-preview-footnote {
-  margin: 0.875rem auto 1rem;
-  max-width: 20rem;
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  text-align: center;
-  color: rgba(244, 244, 245, 0.45);
 }
 
 .quiz-share-preview-footer {

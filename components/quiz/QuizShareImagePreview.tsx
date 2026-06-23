@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { isWeChatBrowser } from "@/lib/quiz-export-card";
 
 type QuizShareImagePreviewProps = {
@@ -18,7 +18,6 @@ export function QuizShareImagePreview({
   sharing = false,
   canNativeShare = false
 }: QuizShareImagePreviewProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
   const [imageReady, setImageReady] = useState(false);
   const inWeChat = isWeChatBrowser();
 
@@ -36,10 +35,6 @@ export function QuizShareImagePreview({
   }, []);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo(0, 0);
-  }, [imageUrl]);
-
-  useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         onClose();
@@ -55,16 +50,16 @@ export function QuizShareImagePreview({
       <div className="quiz-share-preview-topbar">
         <p className="quiz-share-preview-hint">
           {inWeChat
-            ? "长按下方完整图片 →「保存图片」或「转发给朋友」"
-            : "长按下方完整图片保存；保存后在微信聊天中选择图片发送"}
+            ? "完整卡片已适配一屏显示，长按图片 →「保存图片」或「转发给朋友」"
+            : "完整卡片已适配一屏显示，长按图片保存后可在微信发送"}
         </p>
         <button type="button" className="quiz-share-preview-close" onClick={onClose} aria-label="关闭预览">
           关闭
         </button>
       </div>
 
-      <div ref={scrollRef} className="quiz-share-preview-scroll">
-        <div className="quiz-share-preview-image-wrap">
+      <div className="quiz-share-preview-stage">
+        <div className="quiz-share-preview-image-frame">
           {!imageReady ? <div className="quiz-share-preview-image-skeleton" aria-hidden="true" /> : null}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -74,7 +69,6 @@ export function QuizShareImagePreview({
             onLoad={() => setImageReady(true)}
           />
         </div>
-        <p className="quiz-share-preview-footnote">↑ 可上下滑动查看完整卡片，请长按图片本身保存</p>
       </div>
 
       {canNativeShare && onShare ? (
