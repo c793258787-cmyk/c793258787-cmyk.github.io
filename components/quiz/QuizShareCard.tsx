@@ -1,10 +1,11 @@
 "use client";
 
-import { forwardRef, type CSSProperties } from "react";
+import { forwardRef, useState, type CSSProperties } from "react";
 import type { JobRecommendation } from "@/lib/job-recommendation";
 import type { JobResultContent } from "@/lib/job-result-content";
 import type { JobPersonaProfile, PersonaTierMeta } from "@/lib/job-persona";
 import { getJobResultTheme } from "@/lib/job-result-themes";
+import { getQuizJobImageUrl } from "@/lib/quiz-job-images";
 import { QuizShareQrCode } from "@/components/quiz/QuizShareQrCode";
 
 type QuizShareCardProps = {
@@ -53,7 +54,8 @@ export const QuizShareCard = forwardRef<HTMLDivElement, QuizShareCardProps>(func
   { job, content, persona, tierMeta, className },
   ref
 ) {
-  const imageSrc = content.image ?? null;
+  const imageSrc = content.image ? getQuizJobImageUrl(job.id) : null;
+  const [portraitLoaded, setPortraitLoaded] = useState(false);
   const theme = getJobResultTheme(job.id);
   const cardClassName = className ? `quiz-share-card ${className}` : "quiz-share-card";
 
@@ -75,8 +77,23 @@ export const QuizShareCard = forwardRef<HTMLDivElement, QuizShareCardProps>(func
         </div>
 
         {imageSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={imageSrc} alt="" className="quiz-share-card-portrait" crossOrigin="anonymous" />
+          <div className="quiz-share-card-portrait-wrap">
+            {!portraitLoaded ? <div className="quiz-share-card-portrait-skeleton" aria-hidden="true" /> : null}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageSrc}
+              alt=""
+              width={320}
+              height={320}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              className={`quiz-share-card-portrait ${portraitLoaded ? "quiz-share-card-portrait-loaded" : ""}`}
+              crossOrigin="anonymous"
+              onLoad={() => setPortraitLoaded(true)}
+              onError={() => setPortraitLoaded(true)}
+            />
+          </div>
         ) : (
           <div className="quiz-share-card-portrait-fallback">{job.name.slice(0, 1)}</div>
         )}

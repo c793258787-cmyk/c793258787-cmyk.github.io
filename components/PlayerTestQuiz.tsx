@@ -1,14 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { JobRecommendationResults } from "@/components/JobRecommendationResults";
 import { QuizAtmosphere } from "@/components/quiz/QuizAtmosphere";
+import { QuizBgmControl } from "@/components/quiz/QuizBgmControl";
 import { QuizResultHero } from "@/components/quiz/QuizResultHero";
 import { jobResultContent } from "@/lib/job-result-content";
 import { getJobPersona, personaTierMeta, resolvePersonaTier } from "@/lib/job-persona";
 import { calculateRecommendation } from "@/lib/job-recommendation";
 import { applyEffect, createEmptyScores, questions, type TestEffect } from "@/lib/test-questions";
+import { prefetchQuizAssets } from "@/lib/quiz-prefetch";
 
 type Phase = "intro" | "quiz" | "result";
 
@@ -61,8 +63,21 @@ export function PlayerTestQuiz() {
   }
 
   function startQuiz() {
+    prefetchQuizAssets();
     setPhase("quiz");
   }
+
+  useEffect(() => {
+    if (phase !== "intro") {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      prefetchQuizAssets();
+    }, 1200);
+
+    return () => window.clearTimeout(timer);
+  }, [phase]);
 
   return (
     <div className="quiz-h5-shell">
@@ -73,11 +88,14 @@ export function PlayerTestQuiz() {
           <span aria-hidden="true">←</span>
           返回
         </Link>
-        {phase === "quiz" ? (
-          <span className="quiz-h5-counter">
-            {step + 1} / {questions.length}
-          </span>
-        ) : null}
+        <div className="quiz-h5-header-center">
+          {phase === "quiz" ? (
+            <span className="quiz-h5-counter">
+              {step + 1} / {questions.length}
+            </span>
+          ) : null}
+        </div>
+        <QuizBgmControl />
       </header>
 
       {phase === "quiz" ? (

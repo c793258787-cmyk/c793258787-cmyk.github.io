@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { isWeChatBrowser } from "@/lib/quiz-export-card";
 
 type QuizShareImagePreviewProps = {
@@ -19,7 +19,12 @@ export function QuizShareImagePreview({
   canNativeShare = false
 }: QuizShareImagePreviewProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [imageReady, setImageReady] = useState(false);
   const inWeChat = isWeChatBrowser();
+
+  useEffect(() => {
+    setImageReady(false);
+  }, [imageUrl]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -60,8 +65,14 @@ export function QuizShareImagePreview({
 
       <div ref={scrollRef} className="quiz-share-preview-scroll">
         <div className="quiz-share-preview-image-wrap">
+          {!imageReady ? <div className="quiz-share-preview-image-skeleton" aria-hidden="true" /> : null}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={imageUrl} alt="冒险岛灵魂职业分享卡片" className="quiz-share-preview-image" />
+          <img
+            src={imageUrl}
+            alt="冒险岛灵魂职业分享卡片"
+            className={`quiz-share-preview-image ${imageReady ? "quiz-share-preview-image-ready" : ""}`}
+            onLoad={() => setImageReady(true)}
+          />
         </div>
         <p className="quiz-share-preview-footnote">↑ 可上下滑动查看完整卡片，请长按图片本身保存</p>
       </div>

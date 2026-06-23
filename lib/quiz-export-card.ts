@@ -102,8 +102,8 @@ export async function renderQuizShareCard(element: HTMLElement) {
     await waitForLayout();
 
     const exportHeight = Math.ceil(clone.scrollHeight || clone.getBoundingClientRect().height);
-    const html2canvas = (await import("html2canvas")).default;
-    const scale = Math.min(Math.max(window.devicePixelRatio || 2, 2), 3);
+    const html2canvas = await import("@/lib/quiz-prefetch").then((m) => m.loadHtml2Canvas());
+    const scale = isMobileDevice() ? 2 : Math.min(Math.max(window.devicePixelRatio || 2, 2), 3);
 
     return html2canvas(clone, {
       backgroundColor: "#0f172a",
