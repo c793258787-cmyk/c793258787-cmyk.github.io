@@ -6,6 +6,7 @@ category: 职业
 tags: 战士, 转职, 职业选择
 publishedAt: 2026-06-12
 author: 像素观察员
+draft: true
 douyinUrl: https://www.douyin.com/
 ---
 

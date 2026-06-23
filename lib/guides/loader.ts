@@ -31,6 +31,10 @@ function toGuidePost(meta: Record<string, string>, body: string): GuidePost | nu
     return null;
   }
 
+  if (meta.draft === "true") {
+    return null;
+  }
+
   return {
     slug: meta.slug,
     title: meta.title,
