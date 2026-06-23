@@ -1617,6 +1617,98 @@ body {
   cursor: wait;
 }
 
+.quiz-share-section-tip {
+  margin-top: 0.75rem;
+  padding: 0 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: rgba(244, 244, 245, 0.42);
+}
+
+.quiz-share-preview {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+}
+
+.quiz-share-preview-backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: rgba(0, 0, 0, 0.88);
+  cursor: pointer;
+}
+
+.quiz-share-preview-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 22rem);
+  max-height: calc(100dvh - 2rem);
+}
+
+.quiz-share-preview-hint {
+  margin: 0 0 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  text-align: center;
+  color: rgba(244, 244, 245, 0.78);
+}
+
+.quiz-share-preview-image {
+  display: block;
+  width: 100%;
+  max-height: calc(100dvh - 12rem);
+  object-fit: contain;
+  border-radius: 0.75rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  -webkit-touch-callout: default;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.quiz-share-preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.quiz-share-preview-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 7.5rem;
+  min-height: 44px;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: rgba(244, 244, 245, 0.88);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+}
+
+.quiz-share-preview-btn-primary {
+  border-color: rgba(217, 119, 6, 0.55);
+  color: #fff;
+  background: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+}
+
+.quiz-share-preview-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
 @media (min-width: 640px) {
   .quiz-share-section {
     max-width: var(--quiz-h5-max-width);
