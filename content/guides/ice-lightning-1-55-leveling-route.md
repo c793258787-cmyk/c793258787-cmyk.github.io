@@ -14,11 +14,9 @@ cover: /guides/ice-lightning-1-55-leveling-route/cover.jpg
 
 冰雷前期最怕的不是伤害低，而是 **地图选错、蓝药烧空、值钱材料顺手卖给 NPC**。
 
-![前期路线选择错误会让开荒升级变慢并快速消耗热情](/guides/ice-lightning-1-55-leveling-route/cover.jpg)
-
 这套开荒路线的核心很简单：**15 级去猪猪农场积累第一桶金，二转后优先利用冰属性打火野猪，再根据队伍和刷图节奏补雷电。** 升级与赚钱并不冲突，关键是让属性克制替你省药。
 
-![冰雷法师需要用练级掉落覆盖蓝药消耗](/guides/ice-lightning-1-55-leveling-route/ice-mage-cost-and-income.jpg)
+![冰雷法师 1 至 55 级升级路线总览：1-8 级转职、8-15 级射手训练场、15-21 级猪猪农场、21-32 级组队或蘑菇洞、32-55 级火野猪与备选风独眼兽、55 级以后石头人路线](/guides/ice-lightning-1-55-leveling-route/leveling-route-overview.jpg)
 
 ## 适合谁看
 
@@ -64,8 +62,6 @@ cover: /guides/ice-lightning-1-55-leveling-route/cover.jpg
 ## 21-32 级：组队任务与蘑菇洞二选一
 
 21 级后可以根据自己的目标分流。
-
-![固定队能明显改善持续刷怪效率与游戏体验](/guides/ice-lightning-1-55-leveling-route/fixed-party-comparison.jpg)
 
 ### 社交党：废弃都市组队任务
 
