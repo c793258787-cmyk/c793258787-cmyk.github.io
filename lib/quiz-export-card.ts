@@ -8,17 +8,20 @@ export function isMobileDevice() {
   return typeof navigator !== "undefined" && /iPhone|iPad|iPod|Android|Mobile/i.test(navigator.userAgent);
 }
 
-export function getPhoneViewportFitBox() {
+export function getPhoneViewportFitBox(maxWidth?: number, maxHeight?: number) {
   if (typeof window === "undefined") {
-    return { maxWidth: QUIZ_SHARE_EXPORT_WIDTH, maxHeight: 680 };
+    return {
+      maxWidth: maxWidth ?? QUIZ_SHARE_EXPORT_WIDTH,
+      maxHeight: maxHeight ?? 680
+    };
   }
 
   const gutter = 20;
-  const chrome = 96;
-  const maxWidth = Math.min(QUIZ_SHARE_EXPORT_WIDTH, Math.max(280, Math.floor(window.innerWidth - gutter * 2)));
-  const maxHeight = Math.max(420, Math.floor(window.innerHeight * 0.82 - chrome));
 
-  return { maxWidth, maxHeight };
+  return {
+    maxWidth: maxWidth ?? Math.min(QUIZ_SHARE_EXPORT_WIDTH, Math.max(280, Math.floor(window.innerWidth - gutter * 2))),
+    maxHeight: maxHeight ?? Math.max(360, Math.floor(window.innerHeight - gutter * 2))
+  };
 }
 
 function waitForImages(root: HTMLElement) {
@@ -73,25 +76,24 @@ function waitForLayout() {
 }
 
 function getShareCardRoot(node: HTMLElement) {
-  return node.matches(".quiz-share-card") ? node : node.querySelector(".quiz-share-card");
+  const card = node.matches(".quiz-share-card") ? node : node.querySelector(".quiz-share-card");
+  return card instanceof HTMLElement ? card : node;
+}
+
+function measureCardHeight(card: HTMLElement) {
+  const inner = card.querySelector(".quiz-share-card-inner");
+  const innerHeight = inner instanceof HTMLElement ? inner.scrollHeight : 0;
+
+  return Math.ceil(Math.max(card.scrollHeight, card.offsetHeight, card.getBoundingClientRect().height, innerHeight + 32));
 }
 
 function prepareExportClone(element: HTMLElement) {
+  const cardSource = getShareCardRoot(element);
   const sandbox = document.createElement("div");
   sandbox.setAttribute("aria-hidden", "true");
   sandbox.className = "quiz-share-export-sandbox";
-  sandbox.style.cssText = [
-    "position:fixed",
-    "left:0",
-    "top:0",
-    "opacity:0",
-    "pointer-events:none",
-    "z-index:-1",
-    `width:${QUIZ_SHARE_EXPORT_WIDTH}px`,
-    "overflow:visible"
-  ].join(";");
 
-  const clone = element.cloneNode(true) as HTMLElement;
+  const clone = cardSource.cloneNode(true) as HTMLElement;
   normalizeExportClone(clone);
 
   sandbox.appendChild(clone);
@@ -102,10 +104,6 @@ function prepareExportClone(element: HTMLElement) {
 
 function normalizeExportClone(clone: HTMLElement) {
   const card = getShareCardRoot(clone);
-
-  if (!(card instanceof HTMLElement)) {
-    return;
-  }
 
   card.classList.add("quiz-share-card-exporting");
   card.style.width = `${QUIZ_SHARE_EXPORT_WIDTH}px`;
@@ -136,8 +134,8 @@ function normalizeExportClone(clone: HTMLElement) {
   }
 }
 
-export function fitCanvasToPhoneViewport(source: HTMLCanvasElement, captureScale: number) {
-  const { maxWidth, maxHeight } = getPhoneViewportFitBox();
+export function fitCanvasToPhoneViewport(source: HTMLCanvasElement, captureScale: number, fitBox?: { maxWidth: number; maxHeight: number }) {
+  const { maxWidth, maxHeight } = fitBox ?? getPhoneViewportFitBox();
   const outputScale = Math.min(Math.max(window.devicePixelRatio || 2, 2), 2);
 
   const displayWidth = source.width / captureScale;
@@ -165,6 +163,51 @@ export function fitCanvasToPhoneViewport(source: HTMLCanvasElement, captureScale
   return output;
 }
 
+async function captureShareCard(clone: HTMLElement, captureScale: number) {
+  const card = getShareCardRoot(clone);
+  const exportHeight = measureCardHeight(card);
+  const html2canvas = await import("@/lib/quiz-prefetch").then((m) => m.loadHtml2Canvas());
+  const expectedHeight = Math.floor(exportHeight * captureScale * 0.9);
+
+  card.style.height = `${exportHeight}px`;
+
+  const sandbox = card.parentElement;
+
+  if (sandbox instanceof HTMLElement) {
+    sandbox.style.width = `${QUIZ_SHARE_EXPORT_WIDTH}px`;
+    sandbox.style.height = `${exportHeight}px`;
+  }
+
+  const baseOptions = {
+    backgroundColor: "#0f172a",
+    scale: captureScale,
+    useCORS: true,
+    logging: false,
+    scrollX: 0,
+    scrollY: 0,
+    onclone: (_doc: Document, clonedElement: HTMLElement) => {
+      if (clonedElement instanceof HTMLElement) {
+        normalizeExportClone(clonedElement);
+        clonedElement.style.height = `${exportHeight}px`;
+      }
+    }
+  };
+
+  let canvas = await html2canvas(card, {
+    ...baseOptions,
+    width: QUIZ_SHARE_EXPORT_WIDTH,
+    height: exportHeight,
+    windowWidth: QUIZ_SHARE_EXPORT_WIDTH,
+    windowHeight: exportHeight
+  });
+
+  if (canvas.height < expectedHeight) {
+    canvas = await html2canvas(card, baseOptions);
+  }
+
+  return canvas;
+}
+
 export async function waitForShareCardReady(element: HTMLElement) {
   await waitForQrCode(element);
   await waitForImages(element);
@@ -176,32 +219,22 @@ export async function renderQuizShareCard(element: HTMLElement) {
   await waitForShareCardReady(element);
 
   const { sandbox, clone } = prepareExportClone(element);
+  const captureScale = isMobileDevice() ? 2 : Math.min(Math.max(window.devicePixelRatio || 2, 2), 3);
+  const exportHeight = measureCardHeight(clone);
 
   try {
     await waitForImages(clone);
     await waitForLayout();
 
-    const html2canvas = await import("@/lib/quiz-prefetch").then((m) => m.loadHtml2Canvas());
-    const captureScale = isMobileDevice() ? 2 : Math.min(Math.max(window.devicePixelRatio || 2, 2), 3);
+    let rawCanvas = await captureShareCard(clone, captureScale);
+    const expectedHeight = Math.floor(exportHeight * captureScale * 0.9);
 
-    const rawCanvas = await html2canvas(clone, {
-      backgroundColor: "#0f172a",
-      scale: captureScale,
-      useCORS: true,
-      logging: false,
-      scrollX: 0,
-      scrollY: 0,
-      onclone: (_doc, clonedElement) => {
-        const root =
-          clonedElement instanceof HTMLElement ? clonedElement : _doc.querySelector(".quiz-share-card-hero");
+    if (rawCanvas.height < expectedHeight) {
+      rawCanvas = await captureShareCard(clone, captureScale);
+    }
 
-        if (root instanceof HTMLElement) {
-          normalizeExportClone(root);
-        }
-      }
-    });
-
-    return fitCanvasToPhoneViewport(rawCanvas, captureScale);
+    const fitBox = getPhoneViewportFitBox();
+    return fitCanvasToPhoneViewport(rawCanvas, captureScale, fitBox);
   } finally {
     sandbox.remove();
   }
@@ -242,10 +275,8 @@ export async function readBlobImageSize(blob: Blob) {
 export function isLikelyCompleteShareExport(size: { width: number; height: number }) {
   const { maxWidth, maxHeight } = getPhoneViewportFitBox();
   const outputScale = 2;
-  const maxPixelWidth = maxWidth * outputScale * 1.05;
-  const maxPixelHeight = maxHeight * outputScale * 1.05;
 
-  return size.width > 120 && size.height > 120 && size.width <= maxPixelWidth && size.height <= maxPixelHeight;
+  return size.width >= 120 && size.height >= 120 && size.width <= maxWidth * outputScale * 1.08 && size.height <= maxHeight * outputScale * 1.08;
 }
 
 export function downloadBlob(blob: Blob, filename: string) {
