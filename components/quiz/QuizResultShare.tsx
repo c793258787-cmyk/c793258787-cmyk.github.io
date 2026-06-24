@@ -1,15 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useState, type RefObject } from "react";
 import type { JobRecommendation } from "@/lib/job-recommendation";
 import {
+  blobToDataUrl,
   canvasToBlob,
   downloadBlob,
   getQuizShareFilename,
-  isLikelyCompleteShareExport,
   isMobileDevice,
   isWeChatBrowser,
-  readBlobImageSize,
   renderQuizShareCard,
   tryNativeShare,
   waitForShareCardReady
@@ -28,82 +27,12 @@ type PreviewState = {
   canNativeShare: boolean;
 };
 
-async function createShareBlob(card: HTMLElement) {
-  const canvas = await renderQuizShareCard(card);
-  const blob = await canvasToBlob(canvas);
-  const size = await readBlobImageSize(blob);
-
-  if (!isLikelyCompleteShareExport(size)) {
-    throw new Error("Incomplete share export");
-  }
-
-  return blob;
-}
-
 export function QuizResultShare({ cardRef, job }: QuizResultShareProps) {
   const [generating, setGenerating] = useState(false);
   const [sharing, setSharing] = useState(false);
-  const [exportReady, setExportReady] = useState(false);
   const [preview, setPreview] = useState<PreviewState | null>(null);
-  const previewUrlRef = useRef<string | null>(null);
-  const exportCacheRef = useRef<{ jobId: string; blob: Blob } | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (previewUrlRef.current) {
-        URL.revokeObjectURL(previewUrlRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-    exportCacheRef.current = null;
-    setExportReady(false);
-
-    const warmExport = async () => {
-      if (!cardRef.current) {
-        return;
-      }
-
-      await waitForShareCardReady(cardRef.current);
-
-      if (cancelled || !cardRef.current) {
-        return;
-      }
-
-      try {
-        const blob = await createShareBlob(cardRef.current);
-
-        if (cancelled) {
-          return;
-        }
-
-        exportCacheRef.current = { jobId: job.id, blob };
-        setExportReady(true);
-      } catch {
-        if (!cancelled) {
-          setExportReady(false);
-        }
-      }
-    };
-
-    const timerId = window.setTimeout(() => {
-      void warmExport();
-    }, 800);
-
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timerId);
-    };
-  }, [cardRef, job.id]);
 
   function closePreview() {
-    if (previewUrlRef.current) {
-      URL.revokeObjectURL(previewUrlRef.current);
-      previewUrlRef.current = null;
-    }
-
     setPreview(null);
   }
 
@@ -113,13 +42,7 @@ export function QuizResultShare({ cardRef, job }: QuizResultShareProps) {
       typeof navigator.share === "function" &&
         ("canShare" in navigator ? navigator.canShare({ files: [file] }) : true)
     );
-
-    if (previewUrlRef.current) {
-      URL.revokeObjectURL(previewUrlRef.current);
-    }
-
-    const imageUrl = URL.createObjectURL(blob);
-    previewUrlRef.current = imageUrl;
+    const imageUrl = await blobToDataUrl(blob);
 
     setPreview({
       imageUrl,
@@ -157,26 +80,9 @@ export function QuizResultShare({ cardRef, job }: QuizResultShareProps) {
     const filename = getQuizShareFilename(job.name);
 
     try {
-      let blob = exportCacheRef.current?.jobId === job.id ? exportCacheRef.current.blob : null;
-
-      if (blob) {
-        try {
-          const size = await readBlobImageSize(blob);
-
-          if (!isLikelyCompleteShareExport(size)) {
-            blob = null;
-          }
-        } catch {
-          blob = null;
-        }
-      }
-
-      if (!blob) {
-        blob = await createShareBlob(cardRef.current);
-        exportCacheRef.current = { jobId: job.id, blob };
-        setExportReady(true);
-      }
-
+      await waitForShareCardReady(cardRef.current);
+      const canvas = await renderQuizShareCard(cardRef.current);
+      const blob = await canvasToBlob(canvas);
       await deliverBlob(blob, filename);
     } catch {
       window.alert("图片生成失败，请稍后重试。");
@@ -201,24 +107,20 @@ export function QuizResultShare({ cardRef, job }: QuizResultShareProps) {
     }
   }
 
-  const buttonLabel = generating ? "正在生成图片…" : exportReady ? "保存 / 分享卡片" : "准备分享卡片…";
-
   return (
     <>
       <div className="quiz-share-section quiz-share-section-compact quiz-reveal quiz-reveal-4">
         <button type="button" onClick={handleShare} disabled={generating} className="quiz-share-btn">
-          {buttonLabel}
+          {generating ? "正在生成图片…" : "保存 / 分享卡片"}
         </button>
-        <p className="quiz-share-section-tip">
-          {exportReady ? "生成图片后可保存到相册，或发送给微信好友" : "正在后台准备高清分享图，请稍候…"}
-        </p>
+        <p className="quiz-share-section-tip">生成完整卡片后可保存到相册，或发送给微信好友</p>
       </div>
 
       {generating ? (
         <div className="quiz-share-generating" role="status" aria-live="polite">
           <div className="quiz-share-generating-spinner" aria-hidden="true" />
           <p className="quiz-share-generating-title">正在生成分享卡片</p>
-          <p className="quiz-share-generating-sub">马上就好，请不要关闭页面</p>
+          <p className="quiz-share-generating-sub">请稍候，马上就好</p>
         </div>
       ) : null}
 
